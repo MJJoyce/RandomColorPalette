@@ -68,8 +68,46 @@ ColorPaletteGenerator.prototype.resetSaturation = function() {
 	return this;
 }
 
+// Generate the next semi-random color and return a dictionary of the current HSV values
 ColorPaletteGenerator.prototype.getNextColor = function() {
+	this.hue = (this.hue + this.GOLDEN_RATIO_CONJUGATE) % 1
+
+	return {
+		"hue": this.hue,
+		"saturation": this.saturation,
+		"value": this.value,
+	};
 }
 
+// Generate the next semi-random color and return it as an RGB value
 ColorPaletteGenerator.prototype.getNextRGBColor = function() {
+	this.getNextColor();
+
+	// For additional information on how to convert from HSV to RGB please look at [1]. The
+	// only possible "gotcha" is that we're maintaining our hue value as a float from [0, 1] 
+	// instead of in degrees or radians. This really only changes the initial H` calculation
+	// mentioned in [1].
+	//
+	// [1] https://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV
+	
+    // This is H / 60 for us when H is [0, 360]
+	var huePrime = this.hue * 6
+
+	var chroma = this.saturation * this.value;
+	var intermediate = chroma * (1 - Math.abs(huePrime % 2 - 1));
+
+	// With this chroma and intermediate value we can we can find a point along the bottom
+	// of the RGB cube with the same chroma and hue as our HSV value.
+	var partialRGB;
+	if (0 <= huePrime && huePrime < 1)      partialRGB = [chroma, intermediate, 0];
+	else if (1 <= huePrime && huePrime < 2) partialRGB = [intermediate, chroma, 0];
+	else if (2 <= huePrime && huePrime < 3) partialRGB = [0, chroma, intermediate];
+	else if (3 <= huePrime && huePrime < 4) partialRGB = [0, intermediate, chroma];
+	else if (4 <= huePrime && huePrime < 5) partialRGB = [intermediate, 0, chroma];
+	else if (5 <= huePrime && huePrime < 6) partialRGB = [chroma, 0, intermediate];
+	else                                    partialRGB = [0, 0, 0];
+
+	// Finally we'll get the actual RGB value by adding a constant offset to the calculated values.
+	var offset = this.value - chroma;
+	return [partialRGB[0] + offset, partialRGB[1] + offset, partialRGB[2] + offset];
 }
