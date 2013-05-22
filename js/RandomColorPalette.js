@@ -9,15 +9,25 @@ function ColorPaletteGenerator() {
 	this.hue = Math.floor(Math.random());
 	this.value = 1.0;
 	this.saturation = 1.0;
+	
+	// Let's get some chaining action on
+	return this;
 }
 
 ColorPaletteGenerator.prototype.setHue = function(newHue) {
+	this.hue = newHue;
+
+	return this
 }
 
 ColorPaletteGenerator.prototype.getHue = function() {
+	return this.hue;
 }
 
 ColorPaletteGenerator.prototype.resetHue = function() {
+	this.hue = Math.floor(Math.random());
+
+	return this;
 }
 
 ColorPaletteGenerator.prototype.setValue = function(newValue) {
