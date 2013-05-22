@@ -6,7 +6,7 @@ function ColorPaletteGenerator() {
 	// saturation to 1.0 gives us defaults that are vibrant by default.
 	//
 	// [1] https://en.wikipedia.org/wiki/HSL_and_HSV
-	this.hue = Math.floor(Math.random());
+	this.hue = Math.random();
 	this.value = 1.0;
 	this.saturation = 1.0;
 
@@ -31,7 +31,7 @@ ColorPaletteGenerator.prototype.getHue = function() {
 }
 
 ColorPaletteGenerator.prototype.resetHue = function() {
-	this.hue = Math.floor(Math.random());
+	this.hue = Math.random();
 
 	return this;
 }
@@ -47,7 +47,7 @@ ColorPaletteGenerator.prototype.getValue = function() {
 }
 
 ColorPaletteGenerator.prototype.resetValue = function() {
-	this.value = Math.floor(Math.random());
+	this.value = Math.random();
 
 	return this;
 }
@@ -63,7 +63,7 @@ ColorPaletteGenerator.prototype.getSaturation = function() {
 }
 
 ColorPaletteGenerator.prototype.resetSaturation = function() {
-	this.saturation = Math.floor(Math.random());
+	this.saturation = Math.random();
 
 	return this;
 }
