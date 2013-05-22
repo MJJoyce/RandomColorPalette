@@ -9,6 +9,12 @@ function ColorPaletteGenerator() {
 	this.hue = Math.floor(Math.random());
 	this.value = 1.0;
 	this.saturation = 1.0;
+
+	// Constant for the Golden Angle. Check out [1] and [2] for why we're using this value.
+	//
+	// [1] https://en.wikipedia.org/wiki/Golden_angle
+	// [2] https://en.wikipedia.org/wiki/Golden_ratio#Mathematics
+	this.GOLDEN_RATIO_CONJUGATE = 0.61803398875;
 	
 	// Let's get some chaining action on
 	return this;
