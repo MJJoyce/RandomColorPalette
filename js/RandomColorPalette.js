@@ -31,12 +31,19 @@ ColorPaletteGenerator.prototype.resetHue = function() {
 }
 
 ColorPaletteGenerator.prototype.setValue = function(newValue) {
+	this.value = newValue;
+
+	return this;
 }
 
 ColorPaletteGenerator.prototype.getValue = function() {
+	return this.value;
 }
 
 ColorPaletteGenerator.prototype.resetValue = function() {
+	this.value = Math.floor(Math.random());
+
+	return this;
 }
 
 ColorPaletteGenerator.prototype.setSaturation = function(newSaturation) {
