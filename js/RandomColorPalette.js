@@ -47,12 +47,19 @@ ColorPaletteGenerator.prototype.resetValue = function() {
 }
 
 ColorPaletteGenerator.prototype.setSaturation = function(newSaturation) {
+	this.saturation = newSaturation;
+
+	return this;
 }
 
 ColorPaletteGenerator.prototype.getSaturation = function() {
+	return this.saturation;
 }
 
 ColorPaletteGenerator.prototype.resetSaturation = function() {
+	this.saturation = Math.floor(Math.random());
+
+	return this;
 }
 
 ColorPaletteGenerator.prototype.getNextColor = function() {
