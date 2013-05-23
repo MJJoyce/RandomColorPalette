@@ -113,7 +113,7 @@ ColorPaletteGenerator.prototype.getNextRGBColor = function() {
 }
 
 // Generate the next semi-random color and return it as a RGB Hex string
-ColorPaletteGenerator.protocol.getNextRGBHexColor = function() {
+ColorPaletteGenerator.prototype.getNextRGBHexColor = function() {
 	var rgb = this.getNextRGBColor();
 
 	// Convert the [0, 1] range float
