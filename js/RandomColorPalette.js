@@ -111,3 +111,21 @@ ColorPaletteGenerator.prototype.getNextRGBColor = function() {
 	var offset = this.value - chroma;
 	return [partialRGB[0] + offset, partialRGB[1] + offset, partialRGB[2] + offset];
 }
+
+// Generate the next semi-random color and return it as a RGB Hex string
+ColorPaletteGenerator.protocol.getNextRGBHexColor = function() {
+	var rgb = this.getNextRGBColor();
+
+	// Convert the [0, 1] range float
+	var r = Math.floor(rgb[0] * 256);
+	var g = Math.floor(rgb[1] * 256);
+	var b = Math.floor(rgb[2] * 256);
+
+	// Convert these to hex
+	r = r.toString(16);
+	g = g.toString(16);
+	b = b.toString(16);
+
+	// Concatenate and return our new string
+	return (r + g + b);
+}
