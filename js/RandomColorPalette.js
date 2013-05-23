@@ -3,12 +3,12 @@ function ColorPaletteGenerator() {
 	//
 	// We want the colors in HSV. Visit [1] for more information. We start with a random hue value
 	// so the user doesn't get duplicate generations (unless they want it). Setting the value and
-	// saturation to 1.0 gives us defaults that are vibrant by default.
+	// saturation to 0.99 gives us defaults that are vibrant by default.
 	//
 	// [1] https://en.wikipedia.org/wiki/HSL_and_HSV
 	this.hue = Math.random();
-	this.value = 1.0;
-	this.saturation = 1.0;
+	this.value = 0.99;
+	this.saturation = 0.99;
 
 	// Constant for the Golden Angle. Check out [1] and [2] for why we're using this value.
 	//
