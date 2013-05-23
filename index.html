@@ -47,6 +47,28 @@ var newColor = colorGen.getNextRGBHexColor();
 						<div id="basicExample"></div>
 					</center>
 				</div>
+				<div class="row">
+					<div class="span8 offset2">
+					<p>
+					We can also be a bit more picky about how we get the colors that we want. We can
+					set the seed value for the hue so we get the same series of colors each time. 
+					Since we're dealing with colors in <a href="https://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV">HSV</a> 
+					we can also play with the saturation and value to change the palette.
+					</p>
+					<p>
+					Here's an example that gives us a pastel look.
+					</p>
+					<pre>
+colorGen.setHue(0.9927902359049767).setSaturation(0.5).setValue(0.95);
+					</pre>
+					</div>
+				</div>
+				<div class="row">
+					<center>
+						<div id="customHSVExample"></div>
+					</center>
+				</div>
+
 			</div>
 		</div>
 		</div>
@@ -61,7 +83,6 @@ var newColor = colorGen.getNextRGBHexColor();
 				var clrGen = new ColorPaletteGenerator();
 
 				clrGen.setHue(0.9387314496561885);
-				console.log(clrGen.getHue());
 
 				// Generate the basic example color pills!!
 				var basicExample = "<ul id='basicList'>";
@@ -71,6 +92,19 @@ var newColor = colorGen.getNextRGBHexColor();
 				}
 				basicExample += "</ul>";
 				$('#basicExample').html(basicExample);
+
+				// Custom pastel example
+				clrGen.setSaturation(0.5).
+					   setHue(0.9927902359049767).
+					   setValue(0.95);
+
+				var customHSVExample = "<ul id='customHSVExample'>";
+				for (var i = 0; i < 10; i++) {
+					var newRGB = clrGen.getNextRGBHexColor();
+					customHSVExample += "<li><span class='colorPill' style='background-color:#" + newRGB +";'></span></li>";
+				}
+				customHSVExample += "</ul>";
+				$('#customHSVExample').html(customHSVExample);
 			});
 		</script>
 <div id="colorTest"></div>
