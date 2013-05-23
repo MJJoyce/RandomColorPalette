@@ -1,1 +1,59 @@
-Random Color Palette Generator landing page
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		</head>
+	<body>
+		<div class="container">
+		<div class="marketing">
+		<div class="content">
+		<div class="row">
+			<div class="span12 columns">
+				<div class="row text-center">
+					<h1>RandomColorPalette.js</h1>
+				</div>
+				<div class="row">
+					<hr />
+				</div>
+				<div class="row">
+					<div class="span8 offset2">
+						<p>
+						Sometimes you need to generate a random number of colors that are still distinct
+						enough for pleasant viewing. That's when you grab RandomColorPalette.js!! It 
+						doesn't promise that it'll generate a perfect color palette. In fact, sometimes 
+						there will be colors that are fairly close together. However, it will do a 
+						reasonably good job without trying too hard and without knowing how many colors
+						you need in advance.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+		</div>
+
+		<script src="js/bootstrap.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+		<script	src="js/RandomColorPalette.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			var clrGen = new ColorPaletteGenerator();
+			clrGen.setSaturation(0.99);
+			clrGen.setValue(0.99);
+
+			var divFiller = "";
+
+			for (var i = 0; i < 10; i++) {
+				var newRGB = clrGen.getNextRGBHexColor();
+				divFiller += "<span style='background-color:#" + newRGB +"; padding:5px; width:10px;'></span>";
+				//var divFiller = "<span style='background-color:#" + newRGB[0] + "" + newRGB[1] + "" + newRGB[2] +"; padding:5px;'></span>";
+				//var divFiller = "<div>" + newRGB[0] + "</div>";
+				//divFiller += "<div>" + newRGB[1] + "</div>";
+				//divFiller += "<div>" + newRGB[2] + "</div>";
+			}
+			$('#colorTest').html(divFiller);
+		});
+		</script>
+<div id="colorTest"></div>
+	</body>
+</html>
