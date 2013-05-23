@@ -21,6 +21,10 @@ function ColorPaletteGenerator() {
 }
 
 ColorPaletteGenerator.prototype.setHue = function(newHue) {
+	// Bound the hue value to [0, 1)
+	if (newHue >= 1) newHue = 0.9999;
+	else if (newHue < 0) newHue = 0;
+
 	this.hue = newHue;
 
 	return this
@@ -37,6 +41,10 @@ ColorPaletteGenerator.prototype.resetHue = function() {
 }
 
 ColorPaletteGenerator.prototype.setValue = function(newValue) {
+	// Bound the value value to [0, 1)
+	if (newValue >= 1) newValue = 0.9999;
+	else if (newValue < 0) newValue = 0;
+
 	this.value = newValue;
 
 	return this;
@@ -53,6 +61,10 @@ ColorPaletteGenerator.prototype.resetValue = function() {
 }
 
 ColorPaletteGenerator.prototype.setSaturation = function(newSaturation) {
+	// Bound the saturation value to [0, 1)
+	if (newSaturation >= 1) newSaturation = 0.9999;
+	else if (newSaturation < 0) newSaturation = 0;
+
 	this.saturation = newSaturation;
 
 	return this;
