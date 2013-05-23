@@ -122,9 +122,9 @@ ColorPaletteGenerator.prototype.getNextRGBHexColor = function() {
 	var b = Math.floor(rgb[2] * 256);
 
 	// Convert these to hex
-	r = ("00" + r.toString(16)).substring(-2);
-	g = ("00" + g.toString(16)).substring(-2);
-	b = ("00" + b.toString(16)).substring(-2);
+	r = ("00" + r.toString(16)).substr(-2);
+	g = ("00" + g.toString(16)).substr(-2);
+	b = ("00" + b.toString(16)).substr(-2);
 
 	// Concatenate and return our new string
 	return (r + g + b);
