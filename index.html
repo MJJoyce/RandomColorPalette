@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
 		</head>
 	<body>
 		<div class="container">
@@ -26,6 +27,26 @@
 						</p>
 					</div>
 				</div>
+				<div class="row">
+					<div class="span8 offset2">
+					<p>
+					Let's grab a few random colors and see what we end up with.
+					</p>
+					<pre>
+var colorGen = new ColorPaletteGenerator();
+var newColor = colorGen.getNextRGBHexColor();
+					</pre>
+					<p>
+					Each call to <code>getNextRGBHexColor()</code> gives us a random color. Here's an
+					example of what doing this a few time might give us!
+					</p>
+					</div>
+				</div>
+				<div class="row">
+					<center>
+						<div id="basicExample"></div>
+					</center>
+				</div>
 			</div>
 		</div>
 		</div>
@@ -36,23 +57,21 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 		<script	src="js/RandomColorPalette.js"></script>
 		<script type="text/javascript">
-		$(document).ready(function() {
-			var clrGen = new ColorPaletteGenerator();
-			clrGen.setSaturation(0.99);
-			clrGen.setValue(0.99);
+			$(document).ready(function() {
+				var clrGen = new ColorPaletteGenerator();
 
-			var divFiller = "";
+				clrGen.setHue(0.9387314496561885);
+				console.log(clrGen.getHue());
 
-			for (var i = 0; i < 10; i++) {
-				var newRGB = clrGen.getNextRGBHexColor();
-				divFiller += "<span style='background-color:#" + newRGB +"; padding:5px; width:10px;'></span>";
-				//var divFiller = "<span style='background-color:#" + newRGB[0] + "" + newRGB[1] + "" + newRGB[2] +"; padding:5px;'></span>";
-				//var divFiller = "<div>" + newRGB[0] + "</div>";
-				//divFiller += "<div>" + newRGB[1] + "</div>";
-				//divFiller += "<div>" + newRGB[2] + "</div>";
-			}
-			$('#colorTest').html(divFiller);
-		});
+				// Generate the basic example color pills!!
+				var basicExample = "<ul id='basicList'>";
+				for (var i = 0; i < 10; i++) {
+					var newRGB = clrGen.getNextRGBHexColor();
+					basicExample += "<li><span class='colorPill' style='background-color:#" + newRGB +";'></span></li>";
+				}
+				basicExample += "</ul>";
+				$('#basicExample').html(basicExample);
+			});
 		</script>
 <div id="colorTest"></div>
 	</body>
