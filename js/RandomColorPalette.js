@@ -195,7 +195,7 @@ ColorPaletteGenerator.prototype.seedWithColor = function(colorString) {
 // Returns
 //   An array containing the red, green, and blue values (in that order) as
 //   floats in the range [0, 1].
-ColorPaletteGenerator.prototype.convertHexRGBColorToFloats(colorString) {
+ColorPaletteGenerator.prototype.convertHexRGBColorToFloats = function(colorString) {
 	if (!(/^#[0-9A-Fa-f]{6}$/.test(colorString))) {
 		console.log("Badly formed colorString in convertHexRGBColorToFloats");
 		return;
