@@ -159,3 +159,51 @@ ColorPaletteGenerator.prototype.getNextRGBHexColor = function() {
 	// Concatenate and return our new string
 	return (r + g + b);
 }
+
+// Seed the color generator with an RGB color
+//
+// Input:
+//	An RGB color value of the form:
+//		#<6 digit hex value> or
+//		rgb(<0-255>, <0-255>, <0-255>)
+//
+//	Returns:
+//		true if the color was processed successfully, false otherwise
+ColorPaletteGenerator.prototype.seedWithColor = function(colorString) {
+	var floatingColor; // The rgb color components as float from 0 to 1
+
+	if (colorString[0] === "#" && colorString.length == 7)
+		floatingColor = convertHexRGBColorToFloats(colorString);
+	else if (colorString.substring(0, 4) === "rgb(")
+		floatingColor = convertRGBColortoFloats(colorString);
+	else
+		return false;
+
+	hsvColor = convertRBGtoHSV(floatingColor);
+	self.setHue(hsvColor.hue);
+	self.setSaturation(hsvColor.saturation);
+	self.setValue(hsvColor.value);
+
+	return true;
+}
+
+// Helper for converting RGB colors of the form #FFFFFF to floats
+//
+// Input: 
+//	 An RGB value of the form #<6 digit hex value>
+//
+// Returns
+//   An array containing the red, green, and blue values (in that order) as
+//   floats in the range [0, 1].
+ColorPaletteGenerator.prototype.convertHexRGBColorToFloats(colorString) {
+	if (!(/^#[0-9A-Fa-f]{6}$/.test(colorString))) {
+		console.log("Badly formed colorString in convertHexRGBColorToFloats");
+		return;
+	}
+
+	red = parseInt(colorString.slice(1,3), 16);
+	green = parseInt(colorString.slice(3,5), 16);
+	blue = parseInt(colorString.slice(5,7), 16);
+
+	return [red/255.0, green/255.0, blue/255.0];
+}
