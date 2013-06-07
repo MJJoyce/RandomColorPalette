@@ -217,7 +217,7 @@ ColorPaletteGenerator.prototype.convertHexRGBColorToFloats = function(colorStrin
 //   An array containing the red, green, and blue values (in that order) as 
 //   floats in the range [0, 1].
 ColorPaletteGenerator.prototype.convertRGBColorToFloats = function(colorString) {
-	if (!(/^rgb\([0,9]{1,3}, [0,9]{1,3}, [0,9]{1,3}\)$/.test(colorString))) {
+	if (!(/^rgb\([0-9]{1,3}, [0-9]{1,3}, [0-9]{1,3}\)$/.test(colorString))) {
 		console.log("Incorrect colorString format in convertRGBColorToFloats");
 		console.log("Expected rbg([0-255], [0-255], [0-255]) but got: " + colorString);
 		return;
