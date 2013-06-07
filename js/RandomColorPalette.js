@@ -224,12 +224,16 @@ ColorPaletteGenerator.prototype.convertRGBColorToFloats = function(colorString) 
 	}
 
 	// Grab the values inside of the parentheses. This will be the color values plus commas
-	var commaSeperatedValues = /^rgb\((.*)\)$/.exec(colorString);
+	// We grab the 1st index since it returns an array with two elements in it as a results. 
+	// The 1st element is the result of the capture (which is what we care about)
+	var commaSeperatedValues = /^rgb\((.*)\)$/.exec(colorString)[1];
 
+	console.log("comma seperated values");
 	console.log(commaSeperatedValues);
 
 	var colorValues = commaSeperatedValues.split(',');
 
+	console.log("color values");
 	console.log(colorValues);
 
 	// Convert all the color values to ints (instead of strings) and make sure the user
