@@ -189,3 +189,39 @@ ColorPaletteGenerator.prototype.convertHexRGBColorToFloats = function(colorStrin
 
 	return [red/255.0, green/255.0, blue/255.0];
 }
+
+// Helper for converting RGB colors of the form rgb(#, #, #) to floats
+// 
+// Input:
+//   A RGB value of the form rgb([0-255], [0-255], [0-255])
+//
+// REturns:
+//   An array containing the red, green, and blue values (in that order) as 
+//   floats in the range [0, 1].
+ColorPaletteGenerator.prototype.convertRGBColorToFloats(colorString) {
+	if (!(/^rgb\([0-9]{1-3}, [0-9]{1-3}, [0-9]{1-3}\)$/.test(colorString))) {
+		console.log("Incorrect colorString format in convertRGBColorToFloats");
+		console.log("Expected rbg([0-255], [0-255], [0-255]) but got: " + colorString);
+		return;
+	}
+
+	// Grab the values inside of the parentheses. This will be the color values plus commas
+	var commaSeperatedValues = /^rgb\((.*)\)$/.exec(colorString);
+
+	console.log(commaSeperatedValues);
+
+	var colorValues = commaSeperatedValues.split(',');
+
+	console.log(colorValues);
+
+	// Convert all the color values to ints (instead of strings) and make sure the user
+	// didn't enter a value that's too big. We only worry about values > 255 since the 
+	// regex test above would reject negative numbers (since it won't accept a -)
+	colorValues.map(function(element) {
+		var intVal = parseInt(element, 10);
+		if (intVal > 255) intVal = 255;
+		return intVal;
+	});
+
+	return [colorValues[0]/255.0, colorValues[1]/255.0, colorValues[2]/255.0];
+}
