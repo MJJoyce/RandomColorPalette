@@ -210,20 +210,15 @@ ColorPaletteGenerator.prototype.convertRGBColorToFloats = function(colorString) 
 	// The 1st element is the result of the capture (which is what we care about)
 	var commaSeperatedValues = /^rgb\((.*)\)$/.exec(colorString)[1];
 
-	console.log("comma seperated values");
-	console.log(commaSeperatedValues);
-
+	// Split the color values out so we can convert them
 	var colorValues = commaSeperatedValues.split(',');
-
-	console.log("color values");
-	console.log(colorValues);
 
 	// Convert all the color values to ints (instead of strings) and make sure the user
 	// didn't enter a value that's too big. We only worry about values > 255 since the 
 	// regex test above would reject negative numbers (since it won't accept a -)
-	colorValues.map(function(element) {
+	colorValues = colorValues.map(function(element) {
 		var intVal = parseInt(element, 10);
-		if (intVal > 255) intVal = 255;
+		if (intVal > 255) {intVal = 255;}	
 		return intVal;
 	});
 
