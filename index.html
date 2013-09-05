@@ -68,7 +68,26 @@ colorGen.setHue(0.9927902359049767).setSaturation(0.5).setValue(0.95);
 						<div id="customHSVExample"></div>
 					</center>
 				</div>
-
+				<div class="row">
+					<div class="span8 offset2">
+					<p>
+					It can also be helpful to specify the starting color to get an initial hue, saturation, and value that we want. Let's start with a nice sea foam green. We'll set the seed color that the color generator should use and then we'll check the generator's color values to make sure everything is set properly.
+					</p>
+					<p>
+					<pre>
+colorGen.seedWithColor('#70ACB6');
+colorGen.getHue();        // = 0.5238095238095237 
+colorGen.getSaturation(); // = 0.3846153846153847 
+colorGen.getValue();      // = 0.7137254901960784
+					</pre>
+					</p>
+					</div>
+				</div>
+				<div class="row">
+					<center>
+						<div id="seedWithColor"></div>
+					</center>
+				</div>
 			</div>
 		</div>
 		</div>
@@ -105,6 +124,11 @@ colorGen.setHue(0.9927902359049767).setSaturation(0.5).setValue(0.95);
 				}
 				customHSVExample += "</ul>";
 				$('#customHSVExample').html(customHSVExample);
+
+				clrGen.seedWithColor('#70ACB6');
+				var newRGB = clrGen.getNextRGBHexColor();
+				var seedWithColor = "<ul id='seedWithColor'><li><span class='colorPill' style='background-color:#" + newRGB +";'></span></li></ul>";
+				$('#seedWithColor').html(seedWithColor);
 			});
 		</script>
 <div id="colorTest"></div>
