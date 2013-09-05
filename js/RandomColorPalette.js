@@ -82,18 +82,19 @@ ColorPaletteGenerator.prototype.resetSaturation = function() {
 
 // Generate the next semi-random color and return a dictionary of the current HSV values
 ColorPaletteGenerator.prototype.getNextColor = function() {
-	this.hue = (this.hue + this.GOLDEN_RATIO_CONJUGATE) % 1
-
-	return {
+	var currentColor = {
 		"hue": this.hue,
 		"saturation": this.saturation,
 		"value": this.value,
 	};
+
+	this.hue = (this.hue + this.GOLDEN_RATIO_CONJUGATE) % 1
+	return currentColor;
 }
 
 // Generate the next semi-random color and return it as an RGB value
 ColorPaletteGenerator.prototype.getNextRGBColor = function() {
-	this.getNextColor();
+	var nextColor = this.getNextColor();
 
 	// For additional information on how to convert from HSV to RGB please look at [1]. The
 	// only possible "gotcha" is that we're maintaining our hue value as a float from [0, 1] 
@@ -103,12 +104,12 @@ ColorPaletteGenerator.prototype.getNextRGBColor = function() {
 	// [1] https://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV
 	
     // This is H / 60 for us when H is [0, 360]
-	var huePrime = this.hue * 6
+	var huePrime = nextColor.hue * 6
 
-	var chroma = this.saturation * this.value;
+	var chroma = nextColor.saturation * nextColor.value;
 	var intermediate = chroma * (1 - Math.abs(huePrime % 2 - 1));
 
-	// With this chroma and intermediate value we can we can find a point along the bottom
+	// With nextColor chroma and intermediate value we can we can find a point along the bottom
 	// of the RGB cube with the same chroma and hue as our HSV value.
 	var partialRGB;
 	if (0 <= huePrime && huePrime < 1)      partialRGB = [chroma, intermediate, 0];
@@ -120,7 +121,7 @@ ColorPaletteGenerator.prototype.getNextRGBColor = function() {
 	else                                    partialRGB = [0, 0, 0];
 
 	// Finally we'll get the actual RGB value by adding a constant offset to the calculated values.
-	var offset = this.value - chroma;
+	var offset = nextColor.value - chroma;
 	return [partialRGB[0] + offset, partialRGB[1] + offset, partialRGB[2] + offset];
 }
 
@@ -155,16 +156,16 @@ ColorPaletteGenerator.prototype.seedWithColor = function(colorString) {
 	var floatingColor; // The rgb color components as float from 0 to 1
 
 	if (colorString[0] === "#" && colorString.length == 7)
-		floatingColor = convertHexRGBColorToFloats(colorString);
+		floatingColor = this.convertHexRGBColorToFloats(colorString);
 	else if (colorString.substring(0, 4) === "rgb(")
-		floatingColor = convertRGBColortoFloats(colorString);
+		floatingColor = this.convertRGBColorToFloats(colorString);
 	else
 		return false;
 
-	hsvColor = convertRBGtoHSV(floatingColor);
-	self.setHue(hsvColor.hue);
-	self.setSaturation(hsvColor.saturation);
-	self.setValue(hsvColor.value);
+	hsvColor = this.convertRGBtoHSV(floatingColor);
+	this.setHue(hsvColor.hue);
+	this.setSaturation(hsvColor.saturation);
+	this.setValue(hsvColor.value);
 
 	return true;
 }
@@ -223,4 +224,53 @@ ColorPaletteGenerator.prototype.convertRGBColorToFloats = function(colorString) 
 	});
 
 	return [colorValues[0]/255.0, colorValues[1]/255.0, colorValues[2]/255.0];
+}
+
+// Convert floating point RGB color of the form ([0-1], [0-1], [0-1]) to HSV
+//
+// Input:
+//	RGB color of the form ([0-1], [0-1], [0-1]) 
+//
+// Return:
+//	Object containing hue, saturation, and value 
+ColorPaletteGenerator.prototype.convertRGBtoHSV = function(floatingColor) {
+	var hsv = {hue: 0, saturation: 0, value: 0};
+
+	var red = floatingColor[0];
+	var green = floatingColor[1];
+	var blue = floatingColor[2];
+	//var red = 112 / 255.0;
+	//var green = 172 / 255.0;
+	//var blue = 182 / 255.0;
+
+	var rgbMin = Math.min(red, green, blue);
+	var rgbMax = Math.max(red, green, blue);
+	var maxMinDelta = rgbMax - rgbMin;
+
+	// Get the Value
+	hsv.value = rgbMax;
+
+	// Get the Saturation
+	if (maxMinDelta == 0) {
+		// Need to avoid division by 0 for the future calculations!!
+		hsv.saturation = 0;
+		hsv.hue = 0;
+		return;
+	} else {
+		hsv.saturation = maxMinDelta / rgbMax;
+	}
+
+	// Get the Hue
+	if (rgbMax == red) {
+		hsv.hue = 60 * (((green - blue) / maxMinDelta) % 6);
+	} else if (rgbMax == green) {
+		hsv.hue = 60 * (((blue - red) / maxMinDelta) + 2);
+	} else { // rgbMax == blue
+		hsv.hue = 60 * (((red - green) / maxMinDelta) + 4);
+	}
+
+	// We get a hue value in the range [0, 360]
+	hsv.hue /= 360.0;
+
+	return hsv;
 }
