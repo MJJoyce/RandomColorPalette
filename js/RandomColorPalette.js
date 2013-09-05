@@ -239,9 +239,6 @@ ColorPaletteGenerator.prototype.convertRGBtoHSV = function(floatingColor) {
 	var red = floatingColor[0];
 	var green = floatingColor[1];
 	var blue = floatingColor[2];
-	//var red = 112 / 255.0;
-	//var green = 172 / 255.0;
-	//var blue = 182 / 255.0;
 
 	var rgbMin = Math.min(red, green, blue);
 	var rgbMax = Math.max(red, green, blue);
